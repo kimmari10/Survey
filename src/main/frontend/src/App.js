@@ -29,9 +29,9 @@ function App() {
 
     return (
         <div className="App">
+            <h1>설문조사 참여</h1>
             <header className="App-header">
-
-                {survey.map(s => <Question question={s.question} key={s.id}/>)}
+                {survey.map(s => <Question type={s.type} question={s.question} key={s.id}/>)}
             </header>
         </div>
     );
