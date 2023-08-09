@@ -1,9 +1,27 @@
 import './App.css';
 import {useEffect, useState} from 'react';
 import Question from "./Question";
+import {legacy_createStore as createStore} from 'redux'
+import {Provider} from "react-redux";
+
+function reducer(currentState, action) {
+    // if(currentState === undefined) {
+    //     return {
+    //         "idx": 1,
+    //         "type": 1,
+    //         "size": 1,
+    //         "question": "기본값",
+    //         "answer": "보기1"
+    //     }
+    // }
+
+    return {...currentState};
+}
+
+
 
 function App() {
-    const survey = [
+    let surveyDB = [
         {
             "idx": 1,
             "type": 1,
@@ -27,8 +45,13 @@ function App() {
         },
 
     ]
+    const store = createStore(reducer);
 
-    //const [survey, setSurvey] = useState({});
+    const [survey, setSurvey] = useState([]);
+
+    useEffect(() => {
+        setSurvey(surveyDB)
+    }, [])
 
     // useEffect(() => {
     //     // fetch(url, options) : Http 요청 함수
@@ -41,7 +64,9 @@ function App() {
         <div className="App">
             <h1>설문조사 참여</h1>
             <header className="App-header">
-                {survey.map(s => <Question type={s.type} question={s.question} key={s.idx}/>)}
+                <Provider store={store}>
+                    <Question />
+                </Provider>
             </header>
         </div>
     );

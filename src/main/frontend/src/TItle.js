@@ -1,8 +1,20 @@
+import styled from "styled-components";
+import {useSelector} from "react-redux";
+
+//TODO
+const styledP = styled.p`
+  font-size: 2rem;
+  color:blue;
+`
+
 function Title(prop) {
     let prefix = "";
     let fontSize = 16;
 
-    switch (prop.size) {
+    const size = useSelector(state => state.size);
+    const question = useSelector(state => state.question);
+
+    switch (size) {
         case 1:
             prefix = "■ ";
             // fontSize = fontSize * prop.size;
@@ -20,7 +32,7 @@ function Title(prop) {
 
 
     return (
-        <div>{prop.question}</div>
+        <p>{prefix}{question}</p>
     );
 }
 

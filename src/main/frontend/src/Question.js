@@ -4,6 +4,7 @@ import Title from "./TItle";
 import TextArea from "./TextArea";
 import Image from "./Image";
 import Text from "./Text";
+import {useSelector} from "react-redux";
 
 function Question(prop) {
     const typeMap = {
@@ -14,19 +15,22 @@ function Question(prop) {
         5:"image",
         6:"text"
     }
-    switch(typeMap[prop.type]) {
+    useSelector(state => console.log(state.type));
+    const type = useSelector(state => state.type);
+
+    switch(typeMap[type]) {
         case "title":
-            return <Title question={prop.question}/>
+            return <Title/>
         case "rdo":
-            return <Radios question={prop.question}/>
+            return <Radios/>
         case "chk":
-            return <CheckBoxes question={prop.question}/>
+            return <CheckBoxes/>
         case "textarea":
-            return <TextArea question={prop.question}/>
+            return <TextArea/>
         case "image":
-            return <Image question={prop.question}/>
+            return <Image/>
         case "text":
-            return <Text question={prop.question}/>
+            return <Text/>
         default:
             return null;
     }
