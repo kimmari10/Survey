@@ -4,7 +4,11 @@ import Title from "./TItle";
 import TextArea from "./TextArea";
 import Image from "./Image";
 import Text from "./Text";
-import {useSelector} from "react-redux";
+import {legacy_createStore as createStore} from 'redux'
+import {Provider} from "react-redux";
+import {useEffect, useState} from "react";
+
+
 
 function Question(prop) {
     const typeMap = {
@@ -15,22 +19,27 @@ function Question(prop) {
         5:"image",
         6:"text"
     }
-    useSelector(state => console.log(state.type));
-    const type = useSelector(state => state.type);
+
+    function reducer(currentState = prop.quest, action) {
+        return {...currentState};
+    }
+    const store = createStore(reducer);
+
+    const type = prop.quest.type;
 
     switch(typeMap[type]) {
         case "title":
-            return <Title/>
+            return <Provider store={store}><Title/></Provider>
         case "rdo":
-            return <Radios/>
+            return <Provider store={store}><Radios/></Provider>
         case "chk":
-            return <CheckBoxes/>
+            return <Provider store={store}><CheckBoxes/></Provider>
         case "textarea":
-            return <TextArea/>
+            return <Provider store={store}><TextArea/></Provider>
         case "image":
-            return <Image/>
+            return <Provider store={store}><Image/></Provider>
         case "text":
-            return <Text/>
+            return <Provider store={store}><Text/></Provider>
         default:
             return null;
     }
